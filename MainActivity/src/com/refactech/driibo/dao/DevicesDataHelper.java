@@ -1,7 +1,7 @@
-
 package com.refactech.driibo.dao;
 
 import com.refactech.driibo.type.dribble.Category;
+import com.refactech.driibo.type.dribble.Device;
 import com.refactech.driibo.type.dribble.Shot;
 import com.refactech.driibo.util.database.Column;
 import com.refactech.driibo.util.database.SQLiteTable;
@@ -20,46 +20,46 @@ import java.util.List;
 /**
  * Created by Issac on 7/18/13.
  */
-public class ShotsDataHelper extends BaseDataHelper {
+public class DevicesDataHelper extends BaseDataHelper {
     private Category mCategory;
 
-    public ShotsDataHelper(Context context, Category category) {
+    public DevicesDataHelper(Context context, Category category) {
         super(context);
         mCategory = category;
     }
 
     @Override
     protected Uri getContentUri() {
-        return DataProvider.SHOTS_CONTENT_URI;
+        return DeviceProvider.DEVICES_CONTENT_URI;
     }
 
-    private ContentValues getContentValues(Shot shot) {
+    private ContentValues getContentValues(Device device) {
         ContentValues values = new ContentValues();
-        values.put(ShotsDBInfo.ID, shot.getId());
-        values.put(ShotsDBInfo.CATEGORY, mCategory.ordinal());
-        values.put(ShotsDBInfo.JSON, shot.toJson());
+        values.put(DevicesDBInfo.ID, device.getId());
+        values.put(DevicesDBInfo.CATEGORY, mCategory.ordinal());
+        values.put(DevicesDBInfo.JSON, device.toJson());
         return values;
     }
 
-    public Shot query(long id) {
-        Shot shot = null;
-        Cursor cursor = query(null, ShotsDBInfo.CATEGORY + "=?" + " AND " + ShotsDBInfo.ID + "= ?",
+    public Device query(long id) {
+        Device device = null;
+        Cursor cursor = query(null, DevicesDBInfo.CATEGORY + "=?" + " AND " + DevicesDBInfo.ID + "= ?",
                 new String[] {
                         String.valueOf(mCategory.ordinal()), String.valueOf(id)
                 }, null);
         if (cursor.moveToFirst()) {
-            shot = Shot.fromCursor(cursor);
+            device = Device.fromCursor(cursor);
         }
         cursor.close();
-        return shot;
+        return device;
     }
 
-    public void bulkInsert(List<Shot> shots) {
+    public void bulkInsert(List<Device> devices) {
     	System.out.println("In bulkInsert");
         ArrayList<ContentValues> contentValues = new ArrayList<ContentValues>();
-        for (Shot shot : shots) {
+        for (Device device : devices) {
         	//System.out.println("shot:"+shot);
-            ContentValues values = getContentValues(shot);
+            ContentValues values = getContentValues(device);
             //System.out.println("ContentValues:"+values);
             contentValues.add(values);
         }
@@ -69,10 +69,10 @@ public class ShotsDataHelper extends BaseDataHelper {
 
     public int deleteAll() {
     	System.out.println("in delete all");
-        synchronized (DataProvider.DBLock) {
-            DataProvider.DBHelper mDBHelper = DataProvider.getDBHelper();
+        synchronized (DeviceProvider.DBLock) {
+            DeviceProvider.DBHelper mDBHelper = DeviceProvider.getDBHelper();
             SQLiteDatabase db = mDBHelper.getWritableDatabase();
-            int row = db.delete(ShotsDBInfo.TABLE_NAME, ShotsDBInfo.CATEGORY + "=?", new String[] {
+            int row = db.delete(DevicesDBInfo.TABLE_NAME, DevicesDBInfo.CATEGORY + "=?", new String[] {
                 String.valueOf(mCategory.ordinal())
             });
             return row;
@@ -80,17 +80,17 @@ public class ShotsDataHelper extends BaseDataHelper {
     }
 
     public CursorLoader getCursorLoader() {
-        return new CursorLoader(getContext(), getContentUri(), null, ShotsDBInfo.CATEGORY + "=?",
+        return new CursorLoader(getContext(), getContentUri(), null, DevicesDBInfo.CATEGORY + "=?",
                 new String[] {
                     String.valueOf(mCategory.ordinal())
-                }, ShotsDBInfo._ID + " ASC");
+                }, DevicesDBInfo._ID + " ASC");
     }
 
-    public static final class ShotsDBInfo implements BaseColumns {
-        private ShotsDBInfo() {
+    public static final class DevicesDBInfo implements BaseColumns {
+        private DevicesDBInfo() {
         }
 
-        public static final String TABLE_NAME = "shots";
+        public static final String TABLE_NAME = "devices";
 
         public static final String ID = "id";
 

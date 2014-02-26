@@ -2,9 +2,12 @@ package com.refactech.driibo.ui.fragment;
 
 import com.refactech.driibo.AppData;
 import com.refactech.driibo.R;
+import com.refactech.driibo.dao.DevicesDataHelper;
 import com.refactech.driibo.dao.ShotsDataHelper;
 import com.refactech.driibo.type.dribble.Category;
+import com.refactech.driibo.type.dribble.Device;
 import com.refactech.driibo.type.dribble.Shot;
+import com.refactech.driibo.ui.adapter.DeviceAdapter;
 import com.refactech.driibo.ui.adapter.ShotsAdapter;
 import com.refactech.driibo.vendor.DribbbleApi;
 
@@ -24,18 +27,18 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class DeviceFragment extends BasePageListFragment<Shot.ShotsArmaryData>
+public class DeviceFragment extends BasePageListFragment<Device.ArmaryData>
 		implements LoaderManager.LoaderCallbacks<Cursor> {
 
 	public static final String EXTRA_CATEGORY = "EXTRA_CATEGORY";
 
 	private Category mCategory;
 
-	private ShotsDataHelper mDataHelper;
+	private DevicesDataHelper mDataHelper;
 
-	public static ShotsFragment newInstance(Category category) {
+	public static DeviceFragment newInstance(Category category) {
 		System.out.println("Category:" + category);
-		ShotsFragment fragment = new ShotsFragment();
+		DeviceFragment fragment = new DeviceFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString(EXTRA_CATEGORY, category.name());
 		fragment.setArguments(bundle);
@@ -48,7 +51,7 @@ public class DeviceFragment extends BasePageListFragment<Shot.ShotsArmaryData>
 		View contentView = super.onCreateView(inflater, container,
 				savedInstanceState);
 		parseArgument();
-		mDataHelper = new ShotsDataHelper(AppData.getContext(), mCategory);
+		mDataHelper = new DevicesDataHelper(AppData.getContext(), mCategory);
 
 		getLoaderManager().initLoader(0, null, this);
 
@@ -57,10 +60,10 @@ public class DeviceFragment extends BasePageListFragment<Shot.ShotsArmaryData>
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Shot shot = (Shot) getAdapter().getItem(
+				Device device = (Device) getAdapter().getItem(
 						position - mListView.getHeaderViewsCount());
 				Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setData(Uri.parse(shot.getUrl()));
+				intent.setData(Uri.parse(device.getUrl()));
 				startActivity(intent);
 			}
 		});
@@ -70,10 +73,10 @@ public class DeviceFragment extends BasePageListFragment<Shot.ShotsArmaryData>
 					@Override
 					public boolean onItemLongClick(AdapterView<?> parent,
 							View view, int position, long id) {
-						Shot shot = (Shot) getAdapter().getItem(
+						Device device = (Device) getAdapter().getItem(
 								position - mListView.getHeaderViewsCount());
 						Intent intent = new Intent(Intent.ACTION_VIEW);
-						intent.setData(Uri.parse(shot.getImage_url()));
+						intent.setData(Uri.parse(device.getImage_url()));
 						startActivity(intent);
 						return true;
 					}
@@ -117,11 +120,11 @@ public class DeviceFragment extends BasePageListFragment<Shot.ShotsArmaryData>
 
 	@Override
 	protected BaseAdapter newAdapter() {
-		return new ShotsAdapter(getActivity(), mListView);
+		return new DeviceAdapter(getActivity(), mListView);
 	}
 
 	@Override
-	protected void processData(Shot.ShotsArmaryData response) {
+	protected void processData(Device.ArmaryData response) {
 		System.out.println("on processData s");
 		System.out.println(response);
 		mPage = response.getId();
@@ -130,7 +133,7 @@ public class DeviceFragment extends BasePageListFragment<Shot.ShotsArmaryData>
 		if (mPage == 1) {
 			mDataHelper.deleteAll();
 		}
-		// ArrayList<Shot> shots = response.getName();
+		 //ArrayList<Shot> shots = response.getDevice();
 		// System.out.println(shots+"is here");
 		mDataHelper.bulkInsert(null);
 	}

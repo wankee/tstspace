@@ -27,7 +27,7 @@ import java.util.ArrayList;
 /**
  * Created by Issac on 7/18/13.
  */
-public class ShotsFragment extends BasePageListFragment<Shot.ShotsArmaryData>
+public class ShotsFragment extends BasePageListFragment<Shot.ShotsRequestData>
 		implements LoaderManager.LoaderCallbacks<Cursor> {
 	public static final String EXTRA_CATEGORY = "EXTRA_CATEGORY";
 
@@ -122,35 +122,35 @@ public class ShotsFragment extends BasePageListFragment<Shot.ShotsArmaryData>
 	}
 
 	@Override
-	protected void processData(Shot.ShotsArmaryData response) {
+	protected void processData(Shot.ShotsRequestData response) {
 		System.out.println("on processData s");
 		System.out.println(response);
-		mPage = response.getId();
-		String str = response.getName();
-		System.out.println("page is " + mPage + " " + str);
+		mPage = response.getPage();
+		//String str = response.getName();
+		System.out.println("page is " + mPage + " ");
 		if (mPage == 1) {
 			mDataHelper.deleteAll();
 		}
-		// ArrayList<Shot> shots = response.getName();
-		// System.out.println(shots+"is here");
-		mDataHelper.bulkInsert(null);
+		 ArrayList<Shot> shots = response.getShots();
+		System.out.println(shots+"is here");
+		mDataHelper.bulkInsert(shots);
 	}
 
 	@Override
 	protected String getUrl(int page) {
 
-		return "http://www.battlenet.com.cn/api/wow/battlePet/ability/640";
+		//return "http://www.battlenet.com.cn/api/wow/battlePet/ability/640";
 		// return "http://us.battle.net/api/wow/battlePet/ability/640";
 		// return "http://www.battlenet.com.cn/api/wow/auction/data/��ˮ����";
 		// return "http://us.battle.net/api/wow/auction/data/medivh";
 		// return "http://m.weather.com.cn/data/101010100.html";
 		// return "http://www.weather.com.cn/data/cityinfo/101010100.html";
 		// return "http://us.battle.net/api/wow/achievement/6";
-		// return String.format(DribbbleApi.SHOTS_LIST, mCategory.name(), page);
+		 return String.format(DribbbleApi.SHOTS_LIST, mCategory.name(), page);
 	}
 
 	@Override
 	protected Class getResponseDataClass() {
-		return Shot.ShotsArmaryData.class;
+		return Shot.ShotsRequestData.class;
 	}
 }
