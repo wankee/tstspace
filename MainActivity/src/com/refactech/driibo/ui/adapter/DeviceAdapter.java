@@ -5,7 +5,6 @@ import com.refactech.driibo.AppData;
 import com.refactech.driibo.R;
 import com.refactech.driibo.data.RequestManager;
 import com.refactech.driibo.type.dribble.Device;
-import com.refactech.driibo.type.dribble.Shot;
 import com.refactech.driibo.util.TimeUtils;
 
 import android.app.Activity;
@@ -35,7 +34,7 @@ public class DeviceAdapter extends CursorAdapter {
    // private BitmapDrawable mDefaultAvatarBitmap = (BitmapDrawable) AppData.getContext()
    //         .getResources().getDrawable(R.drawable.default_avatar);
 
-    private Drawable mDefaultImageDrawable = new ColorDrawable(Color.argb(255, 201, 201, 201));
+  //  private Drawable mDefaultImageDrawable = new ColorDrawable(Color.argb(255, 201, 201, 201));
 
     public DeviceAdapter(Context context, ListView listView) {
         super(context, null, false);
@@ -58,9 +57,9 @@ public class DeviceAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         //Holder holder = getHolder(view);
         Skill skill=getSkill(view);
-    	if (skill.imageRequest != null) {
-            skill.imageRequest.cancelRequest();
-        }
+    	//if (skill.imageRequest != null) {
+       //     skill.imageRequest.cancelRequest();
+      //  }
 
       /*  if (skill.avartarRequest != null) {
             skill.avartarRequest.cancelRequest();
@@ -70,21 +69,21 @@ public class DeviceAdapter extends CursorAdapter {
                 + mListView.getHeaderViewsCount()));
 
         Device device = Device.fromCursor(cursor);
-        String img_str="http://us.media.blizzard.com/wow/icons/56/"+skill.icon+".jpg";
-        skill.imageRequest = RequestManager.loadImage(img_str, RequestManager
-                .getImageListener(skill.image, mDefaultImageDrawable, mDefaultImageDrawable));
+     //   String img_str="http://us.media.blizzard.com/wow/icons/56/"+skill.icon+".jpg";
+       // skill.imageRequest = RequestManager.loadImage(img_str, RequestManager
+       //         .getImageListener(skill.icon_img, mDefaultImageDrawable, mDefaultImageDrawable));
       //  holder.avartarRequest = RequestManager.loadImage(shot.getPlayer().getAvatar_url(),
              //   RequestManager.getImageListener(holder.avatar, mDefaultAvatarBitmap,
               //          mDefaultAvatarBitmap));
-        skill.id.setText(device.getTitle());
+        skill.id.setText(String.valueOf(device.getId()));
        // skill.userName.setText(device.getPlayer().getName());
-        skill.name.setText(String.valueOf(device.getViews_count()));
-        skill.icon.setText(String.valueOf(device.getLikes_count()));
-        skill.cooldown.setText(String.valueOf(device.getComments_count()));
-        skill.rounds.setText(TimeUtils.getListTime(device.getCreated_at()));
-        skill.petTypeId.setText(TimeUtils.getListTime(device.getCreated_at()));
-        skill.isPassive.setText(TimeUtils.getListTime(device.getCreated_at()));
-        skill.hideHints.setText(TimeUtils.getListTime(device.getCreated_at()));
+        skill.name.setText(device.getName());
+        skill.icon.setText(device.getIcon());
+        skill.cooldown.setText(String.valueOf(device.getCooldown()));
+        skill.rounds.setText(String.valueOf(device.getRounds()));
+        skill.petTypeId.setText(String.valueOf(device.getperTypeId()));
+        skill.isPassive.setText(device.getPassive());
+        skill.hideHints.setText(device.getHideHints());
     }
 
     private Skill getSkill(final View view) {
@@ -97,7 +96,7 @@ public class DeviceAdapter extends CursorAdapter {
     }
 
     private class Skill {
-        public ImageView image;
+       // public ImageView icon_img;
 
         public TextView id;
 
@@ -115,12 +114,12 @@ public class DeviceAdapter extends CursorAdapter {
 
         public TextView hideHints;
         
-        public ImageLoader.ImageContainer imageRequest;
+       // public ImageLoader.ImageContainer imageRequest;
 
         //public ImageLoader.ImageContainer avartarRequest;
 
         public Skill(View view) {
-            image = (ImageView) view.findViewById(R.id.image);
+        //    icon_img = (ImageView) view.findViewById(R.id.image);
             id = (TextView) view.findViewById(R.id.id);
             icon = (TextView) view.findViewById(R.id.icon);
             name = (TextView) view.findViewById(R.id.name);

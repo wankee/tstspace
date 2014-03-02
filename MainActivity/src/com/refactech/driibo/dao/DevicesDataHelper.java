@@ -2,7 +2,6 @@ package com.refactech.driibo.dao;
 
 import com.refactech.driibo.type.dribble.Category;
 import com.refactech.driibo.type.dribble.Device;
-import com.refactech.driibo.type.dribble.Shot;
 import com.refactech.driibo.util.database.Column;
 import com.refactech.driibo.util.database.SQLiteTable;
 
@@ -35,6 +34,7 @@ public class DevicesDataHelper extends BaseDataHelper {
 
     private ContentValues getContentValues(Device device) {
         ContentValues values = new ContentValues();
+        System.out.println(device.getId()+" "+mCategory.ordinal()+device.toJson());
         values.put(DevicesDBInfo.ID, device.getId());
         values.put(DevicesDBInfo.CATEGORY, mCategory.ordinal());
         values.put(DevicesDBInfo.JSON, device.toJson());
@@ -53,7 +53,21 @@ public class DevicesDataHelper extends BaseDataHelper {
         cursor.close();
         return device;
     }
-
+    
+    public void insert(Device device) {
+    	System.out.println("In insert");
+        //ArrayList<ContentValues> contentValues = new ArrayList<ContentValues>();
+       // for (Device device : devices) {
+        	//System.out.println("shot:"+shot);
+        ContentValues value = getContentValues(device);
+        System.out.println(value);
+            //System.out.println("ContentValues:"+values);
+         //  contentValues.add(values);
+        //}
+        //ContentValues[] valueArray = new ContentValues[contentValues.size()];
+        insert(value);
+        System.out.println("In insert over");
+    }
     public void bulkInsert(List<Device> devices) {
     	System.out.println("In bulkInsert");
         ArrayList<ContentValues> contentValues = new ArrayList<ContentValues>();

@@ -37,6 +37,7 @@ public abstract class BaseDataHelper {
     }
 
     protected final Uri insert(ContentValues values) {
+    //	 System.out.println("in uri insert"+values);
         return mContext.getContentResolver().insert(getContentUri(), values);
     }
 

@@ -107,7 +107,7 @@ public class MainActivity extends FragmentActivity {
             case R.id.action_refresh:
             	   System.out.println("refreshbutton clicked");
                 mContentFragment.loadFirstPageAndScrollToTop();
-                System.out.println("refreshbutton clicked");
+                System.out.println("refreshbutton clicked over");
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, PreferenceActivity.class));

@@ -28,7 +28,7 @@ public class DeviceProvider extends ContentProvider {
     public static final String SCHEME = "content://";
 
     // messages
-    public static final String PATH_DEVICES = "/device";
+    public static final String PATH_DEVICES = "/devices";
 
     public static final Uri DEVICES_CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + PATH_DEVICES);
 
@@ -204,7 +204,8 @@ public class DeviceProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            ShotsDataHelper.ShotsDBInfo.TABLE.create(db);
+        	System.out.println("CREATE DATEBASE");
+            DevicesDataHelper.DevicesDBInfo.TABLE.create(db);
         }
 
         @Override

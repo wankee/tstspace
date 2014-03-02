@@ -2,7 +2,6 @@ package com.refactech.driibo.type.dribble;
 
 import com.google.gson.Gson;
 import com.refactech.driibo.dao.DevicesDataHelper;
-import com.refactech.driibo.dao.ShotsDataHelper;
 
 import android.database.Cursor;
 
@@ -13,7 +12,59 @@ import java.util.HashMap;
  * Created by Issac on 7/18/13.
  */
 public class Device extends BaseType {
-    private static final HashMap<Long, Device> CACHE = new HashMap<Long, Device>();
+	  
+	   private int id;
+
+       private String name;
+
+       private String icon;
+
+       private int cooldown;
+
+       private int rounds;
+       
+       private int petTypeId;
+       
+       private String isPassive;
+       
+       private String hideHints;
+       
+       private static final HashMap<Long, Device> CACHE = new HashMap<Long, Device>();
+       
+       public int getId() {
+           return id;
+       }
+
+       public String getName() {
+           return name;
+       }
+
+       public String getIcon() {
+           return icon;
+       }
+
+       public int getCooldown() {
+           return cooldown;
+       }
+
+       public int getRounds() {
+           return rounds;
+       }
+       
+       public int getperTypeId() {
+           return petTypeId;
+       }
+       
+       public String getPassive() {
+           return isPassive;
+       }
+       
+       public String getHideHints() {
+           return hideHints;
+       }
+	
+	
+   
 
   /*  private long id;
 
@@ -46,7 +97,7 @@ public class Device extends BaseType {
     private Player player;
 */
     private static void addToCache(Device device) {
-        CACHE.put(device.getId(), device);
+        CACHE.put((long) device.getId(), device);
     }
 
     private static Device getFromCache(long id) {
@@ -70,11 +121,11 @@ public class Device extends BaseType {
         return device;
     }
 
-    public long getId() {
+/*    public long getId() {
         return 0;
-    }
+    }*/
 
-    public String getTitle() {
+    /*public String getTitle() {
         return "getTitle";
     }
 
@@ -125,7 +176,7 @@ public class Device extends BaseType {
     public String getCreated_at() {
         return "getCreated_at";
     }
-
+*/
    /* public Player getPlayer() {
         return player;
     }*/
@@ -162,7 +213,7 @@ public class Device extends BaseType {
         }
     }*/
     
-    public static class ArmaryData {
+    /*public static class ArmaryData {
         private int id;
 
         private String name;
@@ -210,5 +261,5 @@ public class Device extends BaseType {
         public String getHideHints() {
             return hideHints;
         }
-    }
+    }*/
 }

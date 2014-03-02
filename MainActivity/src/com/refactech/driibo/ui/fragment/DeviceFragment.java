@@ -3,12 +3,9 @@ package com.refactech.driibo.ui.fragment;
 import com.refactech.driibo.AppData;
 import com.refactech.driibo.R;
 import com.refactech.driibo.dao.DevicesDataHelper;
-import com.refactech.driibo.dao.ShotsDataHelper;
 import com.refactech.driibo.type.dribble.Category;
 import com.refactech.driibo.type.dribble.Device;
-import com.refactech.driibo.type.dribble.Shot;
 import com.refactech.driibo.ui.adapter.DeviceAdapter;
-import com.refactech.driibo.ui.adapter.ShotsAdapter;
 import com.refactech.driibo.vendor.DribbbleApi;
 
 import android.content.Intent;
@@ -27,7 +24,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class DeviceFragment extends BasePageListFragment<Device.ArmaryData>
+public class DeviceFragment extends BasePageListFragment<Device>
 		implements LoaderManager.LoaderCallbacks<Cursor> {
 
 	public static final String EXTRA_CATEGORY = "EXTRA_CATEGORY";
@@ -63,7 +60,7 @@ public class DeviceFragment extends BasePageListFragment<Device.ArmaryData>
 				Device device = (Device) getAdapter().getItem(
 						position - mListView.getHeaderViewsCount());
 				Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setData(Uri.parse(device.getUrl()));
+				//intent.setData(Uri.parse(device.getUrl()));
 				startActivity(intent);
 			}
 		});
@@ -76,7 +73,7 @@ public class DeviceFragment extends BasePageListFragment<Device.ArmaryData>
 						Device device = (Device) getAdapter().getItem(
 								position - mListView.getHeaderViewsCount());
 						Intent intent = new Intent(Intent.ACTION_VIEW);
-						intent.setData(Uri.parse(device.getImage_url()));
+						//intent.setData(Uri.parse(device.getImage_url()));
 						startActivity(intent);
 						return true;
 					}
@@ -124,7 +121,7 @@ public class DeviceFragment extends BasePageListFragment<Device.ArmaryData>
 	}
 
 	@Override
-	protected void processData(Device.ArmaryData response) {
+	protected void processData(Device response) {
 		System.out.println("on processData s");
 		System.out.println(response);
 		mPage = response.getId();
@@ -135,7 +132,8 @@ public class DeviceFragment extends BasePageListFragment<Device.ArmaryData>
 		}
 		 //ArrayList<Shot> shots = response.getDevice();
 		// System.out.println(shots+"is here");
-		mDataHelper.bulkInsert(null);
+		//mDataHelper.bulkInsert(null);
+		mDataHelper.insert(response);
 	}
 
 	@Override
@@ -153,6 +151,6 @@ public class DeviceFragment extends BasePageListFragment<Device.ArmaryData>
 
 	@Override
 	protected Class getResponseDataClass() {
-		return Shot.ShotsArmaryData.class;
+		return Device.class;
 	}
 }

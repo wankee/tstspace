@@ -23,6 +23,13 @@
             android:exported="false">
             <grant-uri-permission android:pathPattern=".*"/>
         </provider>
+        
+         <provider
+            android:name=".dao.DeviceProvider"
+            android:authorities="com.refactech.device"
+            android:exported="false">
+            <grant-uri-permission android:pathPattern=".*"/>
+        </provider>
 
         <activity
             android:name=".ui.MainActivity"

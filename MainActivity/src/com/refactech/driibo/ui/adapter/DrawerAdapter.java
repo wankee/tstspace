@@ -29,7 +29,7 @@ public class DrawerAdapter extends BaseAdapter {
         int count = Category.values().length;
         if (TextUtils.isEmpty(PreferenceUtils.getPrefString(
                 AppData.getContext().getString(R.string.pref_key_login), null))) {
-            return count - 2;
+            return count;
         }
         return count;
     }

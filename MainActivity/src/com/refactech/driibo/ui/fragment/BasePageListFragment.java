@@ -99,7 +99,8 @@ public abstract class BasePageListFragment<T> extends BaseFragment implements
                 new Response.Listener<T>() {
                     @Override
                     public void onResponse(final T response) {
-                    	//  System.out.println("this is"+response);
+                    	System.out.println("this is"+response);
+                    	//System.out.println(response.getClass());
                         CommonUtils.executeAsyncTask(new AsyncTask<Object, Object, Object>() {
                             @Override
                             protected Object doInBackground(Object... params) {
